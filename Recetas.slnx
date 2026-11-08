@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Recetas.Api/Recetas.Api.csproj" />
+  <Project Path="Recetas.Application/Recetas.Application.csproj" />
+  <Project Path="Recetas.Domain/Recetas.Domain.csproj" />
+  <Project Path="Recetas.Infrastructure/Recetas.Infrastructure.csproj" />
+</Solution>
