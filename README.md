@@ -6,4 +6,4 @@ API REST con arquitectura limpia (Domain, Application, Infrastructure y Api) en 
 
 `GET /api/categorias` responde 200 con las categorías.
 
-![Scalar mostrando el endpoint de categorías con 200 OK](Categoría-escalar.png)
+![Scalar mostrando el endpoint de categorías con 200 OK](Scalar-Categoria.png)
