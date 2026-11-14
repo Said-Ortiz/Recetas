@@ -1,6 +1,93 @@
 @Recetas.Api_HostAddress = http://localhost:5068
 
-GET {{Recetas.Api_HostAddress}}/weatherforecast/
-Accept: application/json
 
-###
+### 1. Crear receta -> 201 Created con encabezado Location
+POST {{Recetas.Api_HostAddress}}/api/recetas
+Content-Type: application/json
+
+{
+  "nombre": "Baleadas sencillas",
+  "descripcion": "Tortilla de harina con frijoles, queso y crema.",
+  "ingredientes": "Tortillas de harina, frijoles fritos, queso rallado, crema",
+  "preparacion": "Calentar la tortilla, untar los frijoles, agregar el queso y la crema y doblar.",
+  "tiempoPreparacionMin": 20,
+  "porciones": 4,
+  "categoriaId": 7
+}
+
+### 2. Crear con el mismo nombre -> 409 Conflict (ejecuta primero la 1)
+POST {{Recetas.Api_HostAddress}}/api/recetas
+Content-Type: application/json
+
+{
+  "nombre": "Baleadas sencillas",
+  "descripcion": "Repetida",
+  "ingredientes": "Tortillas, frijoles, queso",
+  "preparacion": "Armar y servir caliente.",
+  "tiempoPreparacionMin": 15,
+  "porciones": 2,
+  "categoriaId": 7
+}
+
+### 3. Crear con datos inválidos -> 400 Bad Request
+POST {{Recetas.Api_HostAddress}}/api/recetas
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "descripcion": "Datos malos",
+  "ingredientes": "",
+  "preparacion": "corta",
+  "tiempoPreparacionMin": 0,
+  "porciones": 500,
+  "categoriaId": 0
+}
+
+### 4. Listar (página 1, 10 por página) -> 200
+GET {{Recetas.Api_HostAddress}}/api/recetas
+
+### 5. Buscar por texto, filtrar por categoría y paginar -> 200
+GET {{Recetas.Api_HostAddress}}/api/recetas?search=baleada&categoriaId=7&page=1&pageSize=5
+
+### 6. Paginación inválida -> 400
+GET {{Recetas.Api_HostAddress}}/api/recetas?page=0&pageSize=500
+
+### 7. Detalle por id -> 200 (cambia el 1 si tu id es otro)
+GET {{Recetas.Api_HostAddress}}/api/recetas/1
+
+### 8. Detalle de una receta que no existe -> 404
+GET {{Recetas.Api_HostAddress}}/api/recetas/9999
+
+### 9. Actualizar -> 204 No Content
+PUT {{Recetas.Api_HostAddress}}/api/recetas/1
+Content-Type: application/json
+
+{
+  "nombre": "Baleadas con huevo",
+  "descripcion": "Baleada con huevo revuelto.",
+  "ingredientes": "Tortillas de harina, frijoles fritos, queso, huevo, crema",
+  "preparacion": "Calentar la tortilla, agregar frijoles, huevo y queso, doblar y servir.",
+  "tiempoPreparacionMin": 25,
+  "porciones": 4,
+  "categoriaId": 7
+}
+
+### 10. Actualizar una receta que no existe -> 404
+PUT {{Recetas.Api_HostAddress}}/api/recetas/9999
+Content-Type: application/json
+
+{
+  "nombre": "No existe",
+  "descripcion": "Prueba",
+  "ingredientes": "Ingredientes de prueba",
+  "preparacion": "Preparación de prueba para el 404.",
+  "tiempoPreparacionMin": 10,
+  "porciones": 1,
+  "categoriaId": 7
+}
+
+### 11. Eliminar -> 204 No Content
+DELETE {{Recetas.Api_HostAddress}}/api/recetas/1
+
+### 12. Eliminar otra vez -> 404
+DELETE {{Recetas.Api_HostAddress}}/api/recetas/1
